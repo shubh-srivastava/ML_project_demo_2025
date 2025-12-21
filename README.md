@@ -1,118 +1,137 @@
-🧠 Sentiment Analysis using LSTM (Softmax – 3 Classes)
-This project implements a Sentiment Analysis model using LSTM (Long Short-Term Memory) neural networks to classify text data into three sentiment categories:
+************************************************************
+**  SENTIMENT ANALYSIS USING LSTM (3-CLASS SOFTMAX MODEL)  **
+************************************************************
 
-Positive
+**OVERVIEW**
+This project implements a Sentiment Analysis system using a
+Long Short-Term Memory (LSTM) neural network to classify text
+into three sentiment categories:
 
-Negative
+**• Positive**
+**• Negative**
+**• Rest (Neutral + Irrelevant)**
 
-Rest (Neutral, Irrelevant, or any other sentiment)
+The model is trained on a Twitter sentiment dataset and built
+using TensorFlow/Keras. It is suitable for college submission
+and GitHub portfolio presentation.
 
-The model is trained on a Twitter sentiment dataset and uses deep learning with TensorFlow/Keras.
+------------------------------------------------------------
 
-📂 Project Structure
+**PROJECT STRUCTURE**
+
 demo-lstm/
 │
-├── main.py              # Main Python script (model training & prediction)
-├── data.csv / twitter_training.csv   # Dataset file (no column headers)
-├── requirements.txt     # Project dependencies
-└── README.md            # Project documentation
-📊 Dataset Description
-The dataset is a CSV file without column names
+├── main.py
+│   → Model training and prediction script
+├── data.csv / twitter_training.csv
+│   → Dataset file (without column headers)
+├── requirements.txt
+│   → Project dependencies
+└── README.md
+│   → Project documentation
 
-Columns are assigned manually as:
+------------------------------------------------------------
 
-Column Index	Column Name	Description
-0	id	Unique identifier (not used)
-1	topic	Topic or category
-2	sentiment	Sentiment label
-3	text	Actual tweet / review text
-Original Sentiment Labels
-Positive
+**DATASET DESCRIPTION**
 
-Negative
+The dataset is a CSV file without column headers.
+Columns are assigned manually during preprocessing.
 
-Neutral
+**COLUMN MAPPING**
+0 → id        : Unique identifier (not used)
+1 → topic     : Topic or category
+2 → sentiment : Sentiment label
+3 → text      : Tweet / review content
 
-Irrelevant
+**ORIGINAL SENTIMENT LABELS**
+• Positive
+• Negative
+• Neutral
+• Irrelevant
 
-Final Sentiment Classes (Used in Model)
-Positive
+**FINAL SENTIMENT CLASSES USED**
+• Positive
+• Negative
+• Rest (Neutral + Irrelevant)
 
-Negative
+------------------------------------------------------------
 
-Rest (Neutral + Irrelevant)
+**TECHNOLOGIES USED**
 
-⚙️ Technologies Used
-Python 3.10+
+• Python 3.10+
+• TensorFlow / Keras
+• Pandas
+• NumPy
+• Scikit-learn
 
-TensorFlow / Keras
+------------------------------------------------------------
 
-Pandas
+**DATA PREPROCESSING STEPS**
 
-NumPy
+1. Load CSV file without headers
+2. Assign column names manually
+3. Remove missing or empty text rows
+4. Convert text column to string format
+5. Merge sentiment labels into 3 classes
+6. Apply One-Hot Encoding
+7. Tokenize text and apply padding
 
-Scikit-learn
+------------------------------------------------------------
 
-🧪 Data Preprocessing Steps
-Load CSV without headers
+**MODEL ARCHITECTURE**
 
-Assign column names manually
-
-Remove missing or empty text rows
-
-Convert text column to string
-
-Group sentiments into 3 classes
-
-Apply One‑Hot Encoding
-
-Tokenize text and apply padding
-
-🧠 Model Architecture
-Embedding Layer (5000 vocab, 128 dim)
+Embedding Layer (vocab_size = 5000, output_dim = 128)
 ↓
-LSTM Layer (128 units, dropout=0.2)
+LSTM Layer (128 units, dropout = 0.2)
 ↓
-Dense Layer (3 units, softmax)
-Activation Function: Softmax
+Dense Layer (3 units, Softmax)
 
-Loss Function: Categorical Crossentropy
+**Training Configuration**
+• Activation Function : Softmax
+• Loss Function       : Categorical Crossentropy
+• Optimizer           : Adam
 
-Optimizer: Adam
+------------------------------------------------------------
 
-🚀 How to Run the Project
-1️⃣ Install Dependencies
+**HOW TO RUN THE PROJECT**
+
+Step 1: Install Dependencies
 pip install -r requirements.txt
-2️⃣ Run the Model
+
+Step 2: Run the Model
 python main.py
-🔍 Example Predictions
+
+------------------------------------------------------------
+
+**EXAMPLE PREDICTIONS**
+
 Text: This game is absolutely amazing
-Predicted Sentiment: Positive
+Prediction: Positive
 
 Text: Worst experience ever
-Predicted Sentiment: Negative
+Prediction: Negative
 
 Text: Just another normal day
-Predicted Sentiment: Rest
-✅ Key Features
-Handles missing & noisy Twitter data
+Prediction: Rest
 
-Uses Softmax for multi‑class classification
+------------------------------------------------------------
 
-Fully local execution (no Kaggle / Colab dependency)
+**KEY FEATURES**
 
-Clean, modular, and readable code
+• Handles noisy Twitter text data
+• Multi-class classification using Softmax
+• Fully local execution
+• Clean and modular codebase
+• Suitable for academic and portfolio use
 
-Ready for college submission or GitHub portfolio
+------------------------------------------------------------
 
-📌 Future Improvements
-Add Bi‑LSTM for better context understanding
+**FUTURE IMPROVEMENTS**
 
-Handle class imbalance
+• Implement Bi-LSTM for better context capture
+• Handle class imbalance
+• Add confusion matrix and classification report
+• Save and load trained model
+• Advanced text preprocessing
 
-Add confusion matrix & classification report
-
-Save and load trained model
-
-Advanced text cleaning (URLs, emojis, hashtags)
-
+************************************************************
