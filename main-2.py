@@ -284,7 +284,7 @@ for text in examples:
     # Save tokenizer
     with open("tokenizer.pkl", "wb") as f:
         pickle.dump(tokenizer, f)
-
+    #SIUUUUUUUUU
     # Save label mapping
     with open("label_map.pkl", "wb") as f:
         pickle.dump(label_map, f)
