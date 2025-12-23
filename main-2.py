@@ -6,6 +6,8 @@ import pandas as pd
 import numpy as np
 import os
 import re
+import pickle
+
 
 os.environ["TF_ENABLE_ONEDNN_OPTS"] = "0"
 
@@ -17,6 +19,7 @@ from tensorflow.keras.layers import Dense, Embedding, LSTM, Bidirectional
 from tensorflow.keras.preprocessing.text import Tokenizer
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 from sklearn.metrics import confusion_matrix, classification_report
+from tensorflow.keras.callbacks import EarlyStopping
 import seaborn as sns
 import matplotlib.pyplot as plt
 
@@ -141,18 +144,27 @@ model.compile(
     metrics=["accuracy"]
 )
 
+early_stop = EarlyStopping(
+    monitor="val_loss",
+    patience=2,
+    restore_best_weights=True
+)
+
+
 # ==============================
 # Train Model
 # ==============================
 
-model.fit(
+history = model.fit(
     X_train,
     Y_train,
-    epochs=8,
+    epochs=20,
     batch_size=64,
     validation_split=0.2,
-    class_weight=class_weight_dict
+    class_weight=class_weight_dict,
+    callbacks=[early_stop]
 )
+
 
 # ==============================
 # Evaluate Model
@@ -206,6 +218,35 @@ print(
 )
 
 
+
+# ==============================
+# Learning Curves
+# ==============================
+
+plt.figure(figsize=(12, 5))
+
+# Accuracy plot
+plt.subplot(1, 2, 1)
+plt.plot(history.history["accuracy"], label="Train Accuracy")
+plt.plot(history.history["val_accuracy"], label="Validation Accuracy")
+plt.xlabel("Epochs")
+plt.ylabel("Accuracy")
+plt.title("Training vs Validation Accuracy")
+plt.legend()
+
+# Loss plot
+plt.subplot(1, 2, 2)
+plt.plot(history.history["loss"], label="Train Loss")
+plt.plot(history.history["val_loss"], label="Validation Loss")
+plt.xlabel("Epochs")
+plt.ylabel("Loss")
+plt.title("Training vs Validation Loss")
+plt.legend()
+
+plt.show()
+
+
+
 # ==============================
 # Prediction Function
 # ==============================
@@ -232,3 +273,20 @@ examples = [
 for text in examples:
     print(f"Text: {text}")
     print(f"Predicted Sentiment: {predict_sentiment(text)}\n")
+
+    # ==============================
+    # Save Model & Tokenizer
+    # ==============================
+
+    # Save Keras model
+    model.save("sentiment_bilstm_model.h5")
+
+    # Save tokenizer
+    with open("tokenizer.pkl", "wb") as f:
+        pickle.dump(tokenizer, f)
+
+    # Save label mapping
+    with open("label_map.pkl", "wb") as f:
+        pickle.dump(label_map, f)
+
+    print("Model, tokenizer, and label map saved successfully!")
